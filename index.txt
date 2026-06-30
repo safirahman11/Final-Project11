@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LBS Book Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2A4A;
+    --cream:#F5EFE1;
+    --orange:#C84B31;
+    --gold:#E2A33B;
+    --text:#2B2620;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);}
+  h1,h2,h3{font-family:'Merriweather',serif;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .container{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+  /* Header */
+  header{background:var(--navy);color:#fff;padding:16px 0;}
+  header .container{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+  .logo{font-size:1.4rem;font-weight:700;font-family:'Merriweather',serif;}
+  .search-bar{display:flex;flex:1;max-width:360px;}
+  .search-bar input{flex:1;padding:8px 12px;border:none;border-radius:4px 0 0 4px;font-family:'Inter',sans-serif;}
+  .search-bar button{background:var(--orange);color:#fff;border:none;padding:0 16px;border-radius:0 4px 4px 0;cursor:pointer;font-weight:600;}
+  nav ul{display:flex;gap:24px;list-style:none;}
+  nav a:hover{color:var(--gold);}
+  .cart{background:var(--orange);padding:8px 14px;border-radius:4px;font-weight:600;font-size:0.9rem;}
+
+  /* Hero */
+  .hero{background:#fff;text-align:center;padding:70px 20px;border-bottom:3px solid var(--navy);}
+  .hero h1{font-size:2.4rem;margin-bottom:14px;color:var(--navy);}
+  .hero p{max-width:520px;margin:0 auto 24px;color:#5b5446;}
+  .btn{display:inline-block;background:var(--orange);color:#fff;padding:12px 26px;border-radius:4px;font-weight:600;}
+  .btn:hover{background:var(--navy);}
+
+  /* Section titles */
+  .section{padding:50px 0;}
+  .section h2{text-align:center;color:var(--navy);font-size:1.8rem;margin-bottom:30px;}
+
+  /* Categories */
+  .categories{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+  .category{background:#fff;border:1px solid #ddd;border-radius:6px;padding:20px 30px;text-align:center;width:160px;}
+  .category:hover{border-color:var(--navy);}
+  .category .ic{font-size:1.8rem;margin-bottom:8px;}
+
+  /* Books grid */
+  .books{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .book-card{background:#fff;border:1px solid #ddd;border-radius:6px;overflow:hidden;display:flex;flex-direction:column;}
+  .book-cover{height:220px;width:100%;object-fit:cover;}
+  .book-info{padding:14px;}
+  .book-info .author{font-size:0.8rem;color:#777;}
+  .book-info h4{font-size:1rem;margin:4px 0 8px;}
+  .price{color:var(--orange);font-weight:700;}
+  .add-btn{margin-top:10px;width:100%;background:var(--navy);color:#fff;border:none;padding:8px;border-radius:4px;cursor:pointer;font-weight:600;}
+  .add-btn:hover{background:var(--orange);}
+
+  /* Filter buttons (CSS only, no JS) */
+  .filters{text-align:center;margin-bottom:30px;}
+  .filters label{display:inline-block;padding:8px 16px;border:1px solid #ccc;border-radius:20px;margin:4px;cursor:pointer;font-size:0.9rem;background:#fff;}
+  .filter-radio{position:absolute;opacity:0;width:0;height:0;}
+  #f-all:checked ~ .filters label[for="f-all"],
+  #f-fiction:checked ~ .filters label[for="f-fiction"],
+  #f-kids:checked ~ .filters label[for="f-kids"]{background:var(--navy);color:#fff;}
+  .book-item{display:none;}
+  #f-all:checked ~ .books .book-item{display:flex;}
+  #f-fiction:checked ~ .books .book-item.fiction{display:flex;}
+  #f-kids:checked ~ .books .book-item.kids{display:flex;}
+
+  /* Newsletter */
+  .newsletter{background:var(--navy);color:#fff;text-align:center;padding:50px 20px;}
+  .newsletter h2{color:#fff;}
+  .newsletter form{display:flex;max-width:400px;margin:20px auto 0;}
+  .newsletter input{flex:1;padding:10px;border:none;border-radius:4px 0 0 4px;}
+  .newsletter button{background:var(--orange);color:#fff;border:none;padding:0 20px;border-radius:0 4px 4px 0;font-weight:600;cursor:pointer;}
+
+  /* Footer */
+  footer{background:#16223D;color:#ccc;text-align:center;padding:24px;font-size:0.85rem;}
+
+  @media (max-width:768px){
+    nav ul{display:none;}
+    .search-bar{order:3;max-width:100%;width:100%;}
+    .books{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">LBS Book Shop</div>
+    <form class="search-bar" onsubmit="return false;">
+      <input type="text" placeholder="Search for books, authors...">
+      <button type="submit">Search</button>
+    </form>
+    <nav>
+      <ul>
+        <li><a href="#top">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="cart">Cart (2)</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <h1>Discover Your Next Favorite Book</h1>
+  <p>Browse our handpicked collection of fiction, textbooks, and kids' books at great prices.</p>
+  <a href="#shop" class="btn">Shop Now</a>
+</section>
+
+<section class="section" id="categories">
+  <div class="container">
+    <h2>Popular Categories</h2>
+    <div class="categories">
+      <div class="category"><div class="ic">📘</div>Textbooks</div>
+      <div class="category"><div class="ic">🔍</div>Thriller</div>
+      <div class="category"><div class="ic">💗</div>Romance</div>
+      <div class="category"><div class="ic">🧸</div>Kids Books</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shop" style="background:#fff;">
+  <div class="container">
+    <h2>Shop Our Books</h2>
+
+    <input type="radio" name="filter" id="f-all" class="filter-radio" checked>
+    <input type="radio" name="filter" id="f-fiction" class="filter-radio">
+    <input type="radio" name="filter" id="f-kids" class="filter-radio">
+
+    <div class="filters">
+      <label for="f-all">All</label>
+      <label for="f-fiction">Fiction</label>
+      <label for="f-kids">Kids</label>
+    </div>
+
+    <div class="books">
+      <div class="book-card book-item fiction">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook1/300/400" alt="Caaele Bipin book cover">
+        <div class="book-info">
+          <div class="author">By Leslie Alexander</div>
+          <h4>Caaele Bipin</h4>
+          <div class="price">$9.00</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item fiction">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook2/300/400" alt="A Novel Designer book cover">
+        <div class="book-info">
+          <div class="author">By Annette Black</div>
+          <h4>A Novel Designer</h4>
+          <div class="price">$9.00</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item kids">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook3/300/400" alt="Better Reading Experience book cover">
+        <div class="book-info">
+          <div class="author">By Kristin Watson</div>
+          <h4>Better Reading Experience</h4>
+          <div class="price">$9.00</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item kids">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook4/300/400" alt="Forest of Lanterns book cover">
+        <div class="book-info">
+          <div class="author">By Jenny Wilson</div>
+          <h4>Forest of Lanterns</h4>
+          <div class="price">$7.50</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item fiction">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook5/300/400" alt="The Quiet Hours book cover">
+        <div class="book-info">
+          <div class="author">By Marvin McKinney</div>
+          <h4>The Quiet Hours</h4>
+          <div class="price">$10.50</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item fiction">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook6/300/400" alt="Letters We Never Sent book cover">
+        <div class="book-info">
+          <div class="author">By Devon Lane</div>
+          <h4>Letters We Never Sent</h4>
+          <div class="price">$11.00</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item kids">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook7/300/400" alt="The Tiny Cartographer book cover">
+        <div class="book-info">
+          <div class="author">By Robert Fox</div>
+          <h4>The Tiny Cartographer</h4>
+          <div class="price">$8.20</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book-card book-item kids">
+        <img class="book-cover" src="https://picsum.photos/seed/lbsbook8/300/400" alt="Little Wonders book cover">
+        <div class="book-info">
+          <div class="author">By Jenny Wilson</div>
+          <h4>Little Wonders</h4>
+          <div class="price">$6.90</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter" id="contact">
+  <h2>Join Our Newsletter</h2>
+  <p>Get updates on new arrivals and special discounts.</p>
+  <form onsubmit="return false;">
+    <input type="email" placeholder="Enter your email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<footer>
+   2026 LBS Book Shop. All rights reserved.
+</footer>
+
+</body>
+</html>
